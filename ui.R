@@ -1,4 +1,6 @@
+
 library(shiny)
+library(DT)
 
 navbarPage(
   theme = shinytheme("united"),
@@ -6,7 +8,8 @@ navbarPage(
   tabPanel('Home',
            h1('Mozambican Alliance Towards the Elimination of Malaria'),
            h2('Health Economics Unit'),
-           h2('laia.cirera@isglobal.org')),
+           h2('laia.cirera@economicsofmalaria.com
+')),
   tabPanel('Static',
            h1('Aggregated costs by category'),
            fluidRow(column(6,
@@ -81,6 +84,6 @@ navbarPage(
                     h3(textOutput('text2')),
                     plotOutput('simple_plot')),
              column(5, 
-                   plotOutput('plot1'),
-                    tableOutput('table3'),
-                    h3(textOutput('text4'))))))
+                   # plotOutput('plot1'),
+                   h3('Aggregate outcomes'),
+                    tableOutput('table3')))))

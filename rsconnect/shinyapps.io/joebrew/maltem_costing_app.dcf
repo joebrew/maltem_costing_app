@@ -3,8 +3,9 @@ title: maltem_costing_app
 account: joebrew
 server: shinyapps.io
 appId: 140540
-bundleId: 627394
+bundleId: 631797
 url: https://joebrew.shinyapps.io/maltem_costing_app/
-when: 1480329940.122
+when: 1480599809.49732
 asMultiple: FALSE
 asStatic: FALSE
+ignoredFiles: Magude_adm3.dbf|Magude_adm3.prj|Magude_adm3.qpj|Magude_adm3.shp|Magude_adm3.shx

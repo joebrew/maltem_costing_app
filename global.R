@@ -1,41 +1,43 @@
-library(googleVis)
+library(shiny)
 library(shinythemes)
 library(ggplot2)
 library(dplyr)
 library(tidyr)
 library(readxl)
-library(waffle)
 library(ggthemes)
 library(DT)
 library(scales)
 library(RColorBrewer)
-library(raster)
-library(rgdal)
-library(maptools)
+library(readr)
+# library(rgeos)
+# library(maptools)
+# library(raster)
+# library(rgdal)
 
 #### MOZAMBIQUE
 # Get a shapefile for Mozambique
 # moz <- raster::getData("GADM", country = "MOZ", level = 3)
 
-#### MAGUDE
-# Read in shapefile of Magude
-magude <- readOGR("Adm3", "Magude_adm3")
-# Ensure that only the relevant data
-# remains in the spatial object:
-magude <- magude[magude@data$NAME_2 == "Magude",]
-# Fortify magude (format for ggplot2)
-magude_fortified <- 
-  fortify(magude, region = 'NAME_3')
-# Get lng and lat in magude@data
-magude@data$lng <- coordinates(magude)[,1]
-magude@data$lat <- coordinates(magude)[,2]
+# #### MAGUDE
+# # Read in shapefile of Magude
+# magude <- readOGR(".", "Magude_adm3")
+# # Ensure that only the relevant data
+# # remains in the spatial object:
+# magude <- magude[magude@data$NAME_2 == "Magude",]
+# # Fortify magude (format for ggplot2)
+# magude_fortified <- 
+#   fortify(magude, region = 'NAME_3')
+# # Get lng and lat in magude@data
+# magude@data$lng <- coordinates(magude)[,1]
+# magude@data$lat <- coordinates(magude)[,2]
 
 
-df <- read_excel('data/MALTEM_costing_nov 2016.xlsm',
-                 sheet = '5. Parameters Elimination',
-                 skip = 20)
+# df <- read_excel('MALTEM_costing_nov 2016.xlsm',
+#                  sheet = '5. Parameters Elimination',
+#                  skip = 20)
+df <- read_csv('MALTEM_costing_nov 2016.csv', skip = 20)
 # Subset columns
-df <- df[,c(1,2,6,7, 26, 27, 35, 36, 44, 45)]
+df <- df[,c(1,2,6,7, 26, 27, 35, 36, 44, 45) +1]
 
 # Remove empty rows
 df <- df %>% filter(!is.na(`Elimination activity`))
@@ -60,9 +62,10 @@ df$currency <- toupper(df$currency)
 
 # Read in the percentage data
 projections <- 
-  read_excel('data/MALTEM_costing_nov 2016.xlsm',
+  read_excel('MALTEM_costing_nov 2016.xlsm',
              sheet = 'percentage_projections') %>%
   mutate(p = p * 100) 
+projections <- projections[,2:4]
 projections <- projections[,nchar(names(projections)) >= 1]
 projections$p[projections$year == 2032 &
                 projections$elimination_activity == 'Entomology'] <- 60
@@ -84,4 +87,4 @@ the_future <- expand.grid(year = 2015:2035,
   mutate(value = value * (p/100))
 
 # Get outcomes
-outcomes <- read.csv('data/outcomes.csv')
+outcomes <- read.csv('outcomes.csv')
