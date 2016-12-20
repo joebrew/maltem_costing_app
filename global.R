@@ -32,12 +32,15 @@ library(readr)
 # magude@data$lat <- coordinates(magude)[,2]
 
 
-# df <- read_excel('MALTEM_costing_nov 2016.xlsm',
-#                  sheet = '5. Parameters Elimination',
-#                  skip = 20)
-df <- read_csv('MALTEM_costing_nov 2016.csv', skip = 20)
+df <- read_excel('MALTEM_costing_nov 2016.xlsm',
+                 sheet = '5. Parameters Elimination',
+                 skip = 20)
+# df_names <- read_csv('MALTEM_costing_nov 2016.csv', skip = 20)
+# df_names[,1] <- NULL
+df <- df[,c(1,2,6,7, 26, 27, 35, 36, 44, 45) ]
+# df_names <- df_names[,c(1,2,6,7, 26, 27, 35, 36, 44, 45) +1]
+# names(df) <- names(df_names)
 # Subset columns
-df <- df[,c(1,2,6,7, 26, 27, 35, 36, 44, 45) +1]
 
 # Remove empty rows
 df <- df %>% filter(!is.na(`Elimination activity`))
